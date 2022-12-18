@@ -1,9 +1,6 @@
 import ast
 
-correctly_ordered_indices = []
-pair_list = []
 ordered_signal_list = []
-
 
 # Rules:
 # if left is smaller than right, correct order
@@ -12,7 +9,16 @@ ordered_signal_list = []
 # right runs out of items first, incorrect order
 
 
-def evaluate(left, right):
+def evaluate(left: list, right: list) -> bool | None:
+    """Compare two array and return the result
+
+    Args:
+        left (list): left array
+        right (list): right array
+
+    Returns:
+        bool | None: True if the left array is sorted higher, False if the right array is sorted higher, None if the arrays are equal
+    """
     l_len = len(left)
     r_len = len(right)
     add_index = None
@@ -55,7 +61,12 @@ def evaluate(left, right):
     return add_index
 
 
-def merge_sort(arr):
+def merge_sort(arr: list) -> None:
+    """Perform an in-play merge sort an array
+
+    Args:
+        arr (list): list to sort
+    """
     if len(arr) > 1:
         midpoint = int(len(arr)/2)
 
@@ -89,40 +100,14 @@ def merge_sort(arr):
             k += 1
 
 
-with open("./input.txt") as fp:
+with open("./test.txt") as fp:
     use_left = True
     left = None
     right = None
     lines = fp.readlines()
     for line in list(map(str.strip, lines)):
         if len(line) > 0:
-            if use_left:
-                left = ast.literal_eval(line.strip())
-                use_left = not use_left
-            else:
-                right = ast.literal_eval(line.strip())
-                use_left = not use_left
-        else:
-            pair_list.append((left, right))
-            left = None
-            right = None
-            use_left = True
-
-    # Add the last line since there was no blank line after to complete the processing
-    pair_list.append((left, right))
-
-index = 1
-
-for pair in pair_list:
-    if evaluate(pair[0], pair[1]):
-        correctly_ordered_indices.append(index)
-    index += 1
-
-# Move the valid pair into an array for sorting, note: off by one
-for i in range(0, len(pair_list)):
-    left, right = pair_list[i]
-    ordered_signal_list.append(left)
-    ordered_signal_list.append(right)
+            ordered_signal_list.append(ast.literal_eval(line.strip()))
 
 # append the delimiters
 ordered_signal_list.append([[2]])

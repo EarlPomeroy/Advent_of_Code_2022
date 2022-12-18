@@ -10,7 +10,16 @@ pair_list = []
 # right runs out of items first, incorrect order
 
 
-def evaluate(left, right, index):
+def evaluate(left, right):
+    """Compare two array and return the result
+
+    Args:
+        left list(any): left array
+        right list(any): right array
+
+    Returns:
+        bool | None: True if the left array is sorted higher, False if the right array is sorted higher, None if the arrays are equal
+    """
     l_len = len(left)
     r_len = len(right)
     add_index = None
@@ -35,17 +44,17 @@ def evaluate(left, right, index):
                 else:
                     continue
             elif type(l_val) is list and type(r_val) is list:
-                result = evaluate(l_val, r_val, index)
+                result = evaluate(l_val, r_val)
                 if result is not None:
                     add_index = result
                     break
             elif type(l_val) is int and type(r_val) is list:
-                result = evaluate([l_val], r_val, index)
+                result = evaluate([l_val], r_val)
                 if result is not None:
                     add_index = result
                     break
             elif type(l_val) is list and type(r_val) is int:
-                result = evaluate(l_val, [r_val], index)
+                result = evaluate(l_val, [r_val])
                 if result is not None:
                     add_index = result
                     break
@@ -78,7 +87,7 @@ with open("./input.txt") as fp:
 index = 1
 
 for pair in pair_list:
-    if evaluate(pair[0], pair[1], index):
+    if evaluate(pair[0], pair[1]):
         correctly_ordered_indices.append(index)
     index += 1
 
