@@ -100,7 +100,7 @@ def merge_sort(arr: list) -> None:
             k += 1
 
 
-with open("./test.txt") as fp:
+with open("./input.txt") as fp:
     use_left = True
     left = None
     right = None
